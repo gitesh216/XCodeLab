@@ -58,9 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
     catch (error) {
         console.log("Error creating user: ", error);
-        return res.status(500).json(
-            new ApiResponse(500, null, "Error creating user")
-        );
+        throw new ApiError(500, "Error in creating user", error)
     }
 });
 
@@ -111,14 +109,26 @@ const loginUser = asyncHandler(async (req, res) => {
     } 
     catch (error) {
         console.log("Error creating user: ", error);
-        return res.status(500).json(
-            new ApiResponse(500, null, "Error logging in user")
-        );
+        throw new ApiError(500, "Error in logging in", error)
     }
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "strict",
+            secure: process.env.NODE_ENV !== "development",
+        });
 
+        return res.status(200).json(
+            new ApiResponse(200, null, "Logout successfully")
+        );
+    } 
+    catch (error) {
+        console.log("Error in log out: ", error);
+        throw new ApiError(500, "Error in logging out", error);        
+    }
 });
 
 const getUser = asyncHandler(async (req, res) => {
