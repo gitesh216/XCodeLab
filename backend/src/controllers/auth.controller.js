@@ -132,7 +132,13 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-
+    try {
+        
+    }
+    catch (error) {
+        console.log("Error : ", error);
+        throw new ApiError(500, "Error in logging out", error);
+    }
 });
 
 

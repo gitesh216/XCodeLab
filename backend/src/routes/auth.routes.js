@@ -5,15 +5,16 @@ import {
     logoutUser,
     getUser
 } from "../controllers/auth.controller.js"
+import { isUserValidAuthMiddleware } from "../middlewares/auth.middleware.js"
 
 const authRouter = express.Router();
 
 authRouter.post("/register", registerUser)
 
-authRouter.post("/login", loginUser)
+authRouter.post("/login", isUserValidAuthMiddleware ,loginUser)
 
-authRouter.post("/logout", logoutUser)
+authRouter.post("/logout", isUserValidAuthMiddleware, logoutUser)
 
-authRouter.post("/check", getUser)
+authRouter.post("/check", isUserValidAuthMiddleware, getUser)
 
 export default authRouter;
