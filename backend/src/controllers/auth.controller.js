@@ -133,7 +133,14 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const getUser = asyncHandler(async (req, res) => {
     try {
-        
+        res.status(200).json(
+            new ApiResponse(200, 
+                {
+                    user: req.user
+                },
+                "User authenticated successfully"
+            )
+        );
     }
     catch (error) {
         console.log("Error : ", error);

@@ -11,10 +11,10 @@ const authRouter = express.Router();
 
 authRouter.post("/register", registerUser)
 
-authRouter.post("/login", isUserValidAuthMiddleware ,loginUser)
+authRouter.post("/login", loginUser)
 
 authRouter.post("/logout", isUserValidAuthMiddleware, logoutUser)
 
-authRouter.post("/check", isUserValidAuthMiddleware, getUser)
+authRouter.get("/check", isUserValidAuthMiddleware, getUser)
 
 export default authRouter;

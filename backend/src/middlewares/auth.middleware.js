@@ -5,8 +5,6 @@ import { asyncHandler } from "../utils/async-handler.js"
 
 const isUserValidAuthMiddleware = asyncHandler(async (req, res, next) => {
     try{
-        console.log("cookie: ", req.cookies);
-        
         const token = req.cookies?.token;
         if(!token){
             throw new ApiError(401, "Unauthorized - No token provided")
