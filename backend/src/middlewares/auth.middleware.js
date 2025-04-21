@@ -1,10 +1,13 @@
 import jwt from "jsonwebtoken"
-import { ApiError } from "../utils/api-error";
+import { ApiError } from "../utils/api-error.js";
 import { db } from "../libs/db.js";
+import { asyncHandler } from "../utils/async-handler.js"
 
 const isUserValidAuthMiddleware = asyncHandler(async (req, res, next) => {
     try{
-        const token = req.cookie.token;
+        console.log("cookie: ", req.cookies);
+        
+        const token = req.cookies?.token;
         if(!token){
             throw new ApiError(401, "Unauthorized - No token provided")
         }
