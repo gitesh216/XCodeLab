@@ -35,7 +35,29 @@ const isUserValidAuthMiddleware = asyncHandler(async (req, res, next) => {
     }
 });
 
+const checkAdmin = async (req, res, next) => {
+    try {
+        const userId = req.user?.id;
+        const user = await db.user.findUnique({
+            where: {
+                id: userId
+            },
+            select: {
+                role: true
+            }
+        })
+        if(!user || user.role !== "ADMIN"){
+            throw new ApiError(403, "Access denied - Admin only")
+        }
+
+        next();
+    } 
+    catch (error) {
+        throw new ApiError(500, "Error in checkAdmin", error)
+    }
+}
 
 export {
     isUserValidAuthMiddleware,
+    checkAdmin
 }
