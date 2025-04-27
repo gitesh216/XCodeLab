@@ -16,7 +16,8 @@ app.get("/", (req, res) => {
     res.send("Welcome to XCodeLab")
 })
 
-app.use("/api/v1/user", authRoutes)
+app.use("/api/v1/user", authRoutes);
+app.use("/api/v1/problems", problemRoutes);
 
 app.listen(port, () => {
     console.log("Server listening at port", port);
