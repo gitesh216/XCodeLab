@@ -86,7 +86,17 @@ const createProblem = asyncHandler(async (req, res) => {
     )
 });
 
-const getAllProblems = asyncHandler(async (req, res) => {});
+const getAllProblems = asyncHandler(async (req, res) => {
+    const problems = await db.problem.findMany();
+
+    if(!problems){
+        throw new ApiError(404, "Problems not found");
+    }
+
+    res.status(200).json(
+        new ApiResponse(200, problems, "Problems fetched successfully")
+    );
+});
 
 const getProblemById = asyncHandler(async (req, res) => {});
 
