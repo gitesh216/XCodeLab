@@ -98,7 +98,20 @@ const getAllProblems = asyncHandler(async (req, res) => {
     );
 });
 
-const getProblemById = asyncHandler(async (req, res) => {});
+const getProblemById = asyncHandler(async (req, res) => {
+    const { problemId } = req.params;
+    const problem = await db.findUnique({
+        where: {
+            id: problemId
+        }
+    });
+    if(!problem){
+        throw new ApiError(404, "Problem not found by id")
+    }
+    return res.status(200).json(
+        new ApiResponse(200, problem, "Problem fetched sucessfully by id")
+    );
+});
 
 const updateProblem = asyncHandler(async (req, res) => {});
 
