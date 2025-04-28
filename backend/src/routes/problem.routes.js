@@ -19,11 +19,11 @@ problemRouter.post("/create-problem", isUserValidAuthMiddleware, checkAdmin, cre
 
 problemRouter.get("/get-all-problems", isUserValidAuthMiddleware, getAllProblems)
 
-problemRouter.get("/get-problem/:id", isUserValidAuthMiddleware, getProblemById)
+problemRouter.get("/get-problem/:problemId", isUserValidAuthMiddleware, getProblemById)
 
-problemRouter.put("/update-problem/:id", isUserValidAuthMiddleware, checkAdmin, updateProblem)
+problemRouter.put("/update-problem/:problemId", isUserValidAuthMiddleware, checkAdmin, updateProblem)
 
-problemRouter.delete("/delete-problem/:id", isUserValidAuthMiddleware, checkAdmin, deleteProblem)
+problemRouter.delete("/delete-problem/:problemId", isUserValidAuthMiddleware, checkAdmin, deleteProblem)
 
 problemRouter.get("/get-solved-problems", isUserValidAuthMiddleware, getAllProblemsSolvedByUser)
 
