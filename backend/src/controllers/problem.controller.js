@@ -7,6 +7,7 @@ import {
     submitBatch,
     pollBatchResults,
 } from "../libs/judge0.lib.js";
+import axios from "axios"
 
 const createProblem = asyncHandler(async (req, res) => {
     // 1. get all the data from request body
@@ -56,6 +57,7 @@ const createProblem = asyncHandler(async (req, res) => {
         // 3.6 validate that each test cases passed (status.id === 3)
         for (let i = 0; i < results.length; i++) {
             const result = results[i];
+            console.log("Results------------------------------------", result);
             if (result.status.id !== 3) {
                 throw new ApiError(
                     400,
@@ -63,38 +65,25 @@ const createProblem = asyncHandler(async (req, res) => {
                 );
             }
         }
-
-        // 4. save the problem in the database after all validations pass
-        const newProblem = await db.problem.create({
-            data: {
-                title,
-                description,
-                difficulty,
-                tags,
-                examples,
-                constraints,
-                testcases,
-                codeSnippet,
-                referenceSolution,
-                userId: req.user.id
-            },
-        });
-        return res.status(201).json(
-            new ApiResponse(201, newProblem, "Problem created successfully")
-        )
     }
-
-    // 3.2 prepare judge0 submission for all the testcases
-
-    // 3.3 submit all the test cases in one batch
-
-    // 3.4  extract tokens from reponse
-
-    // 3.5 poll judge0 untill all submissions are done
-
-    // 3.6 validate that each test cases passed (status.id === 3)
-
     // 4. save the problem in the database after all validations pass
+    const newProblem = await db.problem.create({
+        data: {
+            title,
+            description,
+            difficulty,
+            tags,
+            examples,
+            constraints,
+            testcases,
+            codeSnippet,
+            referenceSolution,
+            userId: req.user.id
+        },
+    });
+    return res.status(201).json(
+        new ApiResponse(201, newProblem, "Problem created successfully")
+    )
 });
 
 const getAllProblems = asyncHandler(async (req, res) => {});

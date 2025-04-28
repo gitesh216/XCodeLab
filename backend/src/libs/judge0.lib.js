@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const getJudge0LanguageId = (language) => {
     const languageMap = {
         "PYTHON": 71,
