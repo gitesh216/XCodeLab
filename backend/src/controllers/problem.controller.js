@@ -100,7 +100,7 @@ const getAllProblems = asyncHandler(async (req, res) => {
 
 const getProblemById = asyncHandler(async (req, res) => {
     const { problemId } = req.params;
-    const problem = await db.findUnique({
+    const problem = await db.problem.findUnique({
         where: {
             id: problemId
         }
