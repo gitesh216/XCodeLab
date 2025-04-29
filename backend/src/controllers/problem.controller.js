@@ -113,9 +113,35 @@ const getProblemById = asyncHandler(async (req, res) => {
     );
 });
 
-const updateProblem = asyncHandler(async (req, res) => {});
+const updateProblem = asyncHandler(async (req, res) => {
+    // get id
+    // id -- > problem (condition)
+    // baaki kaam same hai as create
+    // instead of create, use update
+});
 
-const deleteProblem = asyncHandler(async (req, res) => {});
+const deleteProblem = asyncHandler(async (req, res) => {
+    const { problemId } = req.params;
+    if(!problemId){
+        throw new ApiError(400, "Problem Id not found while deleting the problem");
+    }
+    const problem = await db.problem.findUnique({
+        where: {
+            id: problemId
+        }
+    });
+    if(!problem){
+        throw new ApiError(404, "Problem not found with the given id");
+    }
+    await db.problem.delete({
+        where: {
+            id: problemId
+        }
+    });
+    return res.status(200).json(
+        new ApiResponse(200, null, "Problem deleted successfully")
+    );
+});
 
 const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => {});
 
