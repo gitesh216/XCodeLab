@@ -114,10 +114,93 @@ const getProblemById = asyncHandler(async (req, res) => {
 });
 
 const updateProblem = asyncHandler(async (req, res) => {
-    // get id
-    // id -- > problem (condition)
+    const problemId = req.params;
+    
+    if(!problemId){
+        throw new ApiError(400, "Required problem id not found");
+    }
+
+    if (req.user.role !== "ADMIN") {
+        throw new ApiError(403, "You are not allowed to update a problem");
+    }
+
+    const problem = await db.problem.findUnique({
+        where: {
+            id: problemId
+        }
+    });
+
+    if(!problem){
+        throw new ApiError(400, "Problem not found with the given id");
+    }
     // baaki kaam same hai as create
-    // instead of create, use update
+    const {
+        title,
+        description,
+        difficulty,
+        tags,
+        examples,
+        constraints,
+        testcases,
+        codeSnippet,
+        referenceSolution,
+    } = req.body;
+
+    const userId = req.user.id;
+
+    for (const [language, solutionCode] of Object.entries(referenceSolution)) {
+        
+        const languageId = getJudge0LanguageId(language);
+
+        if (!languageId) {
+            throw new ApiError(400, `${language} is not supported`);
+        }
+
+        const submissions = testcases.map(({ input, output }) => ({
+            source_code: solutionCode,
+            language_id: languageId,
+            stdin: input,
+            expected_output: output,
+        }));
+
+        const submissionResults = await submitBatch(submissions);
+
+        const tokens = submissionResults.map((res) => res.token);
+
+        const results = await pollBatchResults(tokens);
+
+        for (let i = 0; i < results.length; i++) {
+            const result = results[i];
+            console.log("Results------------------------------------", result);
+            if (result.status.id !== 3) {
+                throw new ApiError(
+                    400,
+                    `Testcase ${i + 1} failed for language ${language}`,
+                );
+            }
+        }
+    }
+    // 4. save the problem in the database after all validations pass
+    const newProblem = await db.problem.update({
+        where: {
+            id: problemId
+        },
+        data: {
+            title,
+            description,
+            difficulty,
+            tags,
+            examples,
+            constraints,
+            testcases,
+            codeSnippet,
+            referenceSolution,
+            userId
+        },
+    });
+    return res.status(201).json(
+        new ApiResponse(201, newProblem, "Problem created successfully")
+    );
 });
 
 const deleteProblem = asyncHandler(async (req, res) => {
