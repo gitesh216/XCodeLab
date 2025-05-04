@@ -114,8 +114,8 @@ const getProblemById = asyncHandler(async (req, res) => {
 });
 
 const updateProblem = asyncHandler(async (req, res) => {
-    const problemId = req.params;
-    
+    let problemId = req.params;
+
     if(!problemId){
         throw new ApiError(400, "Required problem id not found");
     }
@@ -123,10 +123,12 @@ const updateProblem = asyncHandler(async (req, res) => {
     if (req.user.role !== "ADMIN") {
         throw new ApiError(403, "You are not allowed to update a problem");
     }
-
+    console.log(problemId);
+    console.log(problemId.problemId);
+    
     const problem = await db.problem.findUnique({
         where: {
-            id: problemId
+            id: problemId.problemId
         }
     });
 
@@ -183,7 +185,7 @@ const updateProblem = asyncHandler(async (req, res) => {
     // 4. save the problem in the database after all validations pass
     const newProblem = await db.problem.update({
         where: {
-            id: problemId
+            id: problemId.problemId
         },
         data: {
             title,
