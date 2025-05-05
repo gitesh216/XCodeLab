@@ -1,5 +1,5 @@
 import express from "express"
-import { isUserValidAuthMiddleware } from "../middlewares/auth.middleware";
+import { isUserValidAuthMiddleware } from "../middlewares/auth.middleware.js";
 
 const executionRouter = express.Router();
 
