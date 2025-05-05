@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.routes.js";
 import problemRoutes from "./routes/problem.routes.js"
 import executionRouter from "./routes/executeCode.routes.js";
+import submissionRouter from "./routes/submission.routes.js";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.get("/", (req, res) => {
 app.use("/api/v1/user", authRoutes);
 app.use("/api/v1/problems", problemRoutes);
 app.use("/api/v1/execute-code", executionRouter);
+app.use("/api/v1/submission", submissionRoutes);
+
 
 app.listen(port, () => {
     console.log("Server listening at port", port);
