@@ -228,7 +228,30 @@ const deleteProblem = asyncHandler(async (req, res) => {
     );
 });
 
-const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => {});
+const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => {
+    const problems = await db.problem.findMany({
+        where: {
+            solvedBy: {
+                some: {
+                    userId: req.user.id
+                }
+            }
+        },
+        include: {
+            solvedBy: {
+                where: {
+                    userId: req.user.id
+                }
+            }
+        }
+    });
+    if(!problems){
+        throw new ApiError(500, "Failed to fetch problems solved by user");
+    }
+    return res.status(200).json(
+        new ApiResponse(200, problems, "Problems solved by current user fetched successfully")
+    );
+});
 
 export {
     createProblem,
