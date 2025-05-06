@@ -68,8 +68,26 @@ const createPlaylist = asyncHandler(async(req, res) => {
 });
 
 const addProblemToPlaylist = asyncHandler(async(req, res) => {
+    const { playlistId } = req.params;
+    const { problemIds } = req.body;
 
-});
+    if(!Array.isArray(problemIds) || problemIds.length === 0){
+        throw new ApiError(400, "Invalid or missing problemIds")
+    }
+    
+    const problemsInPlaylist = await db.problemsInPlaylist.createMany({
+        data: problemIds.map((problemId) => ({
+            playlistId, 
+            problemId
+        }))
+    })
+    if(!problemsInPlaylist){
+        throw new ApiError(500, "Error in inserting problems in the playlist")
+    }
+    return res.status(201).json(
+        new ApiResponse(201, problemsInPlaylist, "Problem added to playlist successfully")
+    );
+});;
 
 const deletePlaylist = asyncHandler(async(req, res) => {
 
