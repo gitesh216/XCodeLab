@@ -18,7 +18,7 @@ const submitBatch = async (submissions) => {
 }
 
 const sleep = (ms) => {
-    new Promise((resolve) => setTimeout(resolve, ms))
+    return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 const pollBatchResults = async (tokens) => {
