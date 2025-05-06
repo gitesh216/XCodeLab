@@ -25,7 +25,27 @@ const getAllListDetails = asyncHandler(async(req, res) => {
 });
 
 const getPlayListDetails = asyncHandler(async(req, res) => {
+    const playlistId = req.params;
 
+    const playlist = await db.playlist.findUnique({
+        where: {
+            id: playlistId,
+            userId: req.user.id
+        },
+        include: {
+            problems: {
+                include: {
+                    problem: true
+                }
+            }
+        }
+    });
+    if(!playlist){
+        throw new ApiError(404, "Playlist not found with given playlist id")
+    }
+    return res.status(200).json(
+        new ApiResponse(200, playlist, "Playlist fetched successfully")
+    );
 });
 
 const createPlaylist = asyncHandler(async(req, res) => {
