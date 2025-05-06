@@ -90,7 +90,19 @@ const addProblemToPlaylist = asyncHandler(async(req, res) => {
 });;
 
 const deletePlaylist = asyncHandler(async(req, res) => {
+    const { playlistId } = req.params;
 
+    const deletedPlaylist = await db.playlist.delete({
+        where: {
+            id: playlistId
+        }
+    });
+    if(!deletedPlaylist){
+        throw new ApiError(500, "Error in deleting playlist")
+    }
+    return res.status(200).json(
+        new ApiResponse(200, deletedPlaylist, "Playlist deleted successfully")
+    );
 });
 
 const removeProblemFromPlaylist = asyncHandler(async(req, res) => {
