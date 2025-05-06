@@ -4,7 +4,24 @@ import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
 
 const getAllListDetails = asyncHandler(async(req, res) => {
-
+    const playlist = await db.playlist.findMany({
+        where: {
+            userId: req.user.id
+        },
+        include: {
+            problems: {
+                include: {
+                    problem: true
+                }
+            }
+        }
+    });
+    if(!playlist){
+        throw new ApiError(500, "Error in fetching all playlist details")
+    }
+    return res.status(200).json(
+        new ApiResponse(200, playlist, "Playlist fetched successfully")
+    );
 });
 
 const getPlayListDetails = asyncHandler(async(req, res) => {
