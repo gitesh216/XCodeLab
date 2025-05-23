@@ -1,42 +1,33 @@
-import React, { useState } from 'react'
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from "react-router-dom"
-import {
-  Code,
-  Eye,
-  EyeOff,
-  Loader2,
-  Lock,
-  Mail,
-} from "lucide-react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "react-router-dom";
+import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { z } from "zod";
-
 
 const signUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
   password: z.string().min(6, "Password must be atleast of 6 characters"),
-  name: z.string().min(3, "Name must be atleast 3 character")
-})
+  name: z.string().min(3, "Name must be atleast 3 character"),
+});
+
 
 function SignUpPage() {
-  
   const [showPassword, setShowPassword] = useState(false);
 
-  const {signup , isSigninUp} = useAuthStore();
+  const { signup, isSigninUp } = useAuthStore();
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    resolver: zodResolver(signUpSchema)
-  })
+    resolver: zodResolver(signUpSchema),
+  });
 
   const onSubmit = async (data) => {
     console.log(data);
-  }
-
+  };
 
   return (
     <div className="h-screen grid lg:grid-cols-2">
@@ -56,7 +47,6 @@ function SignUpPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            
             {/* name */}
             <div className="form-control">
               <label className="label">
@@ -76,8 +66,10 @@ function SignUpPage() {
                 />
               </div>
               {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-              )}              
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             {/* Email */}
@@ -99,7 +91,9 @@ function SignUpPage() {
                 />
               </div>
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -133,7 +127,9 @@ function SignUpPage() {
                 </button>
               </div>
               {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -175,6 +171,6 @@ function SignUpPage() {
       />
     </div>
   );
-};
+}
 
-export default SignUpPage
+export default SignUpPage;
