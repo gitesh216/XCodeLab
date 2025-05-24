@@ -12,7 +12,7 @@ import {
   Lock,
   Mail,
 } from "lucide-react";
-import { useAuthStore } from "../store/useAuthStore";
+import { userAuthStore } from "../store/userAuthStore";
 
 // ✅ Zod schema
 const loginSchema = z.object({
@@ -25,7 +25,7 @@ const loginSchema = z.object({
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
  
-  const { login, isLoggingIn } = useAuthStore();
+  const { login, isLoggingIn } = userAuthStore();
   const {
     register,
     handleSubmit,
