@@ -2,6 +2,7 @@ import  { create } from "zustand"
 import  { axiosInstance } from "../lib/axios.js"
 import toast from "react-hot-toast"
 
+
 export const userAuthStore = create((set) => ({
     authUser: null,
     isSigninUp: false,
@@ -11,9 +12,9 @@ export const userAuthStore = create((set) => ({
     checkAuth: async () => {
         set({isCheckingAuth: true});
         try {
-            const res = await axiosInstance.get("/auth/getUser");
+            const res = await axiosInstance.get("/user/check");
             console.log("Checkauth response", res.data);
-            set({authUser: res.data.user})    
+            set({authUser: res.data.data.user})    
         }
         catch (error) {
             console.log("Error in checking auth", error);
@@ -27,9 +28,9 @@ export const userAuthStore = create((set) => ({
     signup: async (data) => {
         set({isSigninUp: true});
         try {
-            const res = await axiosInstance.post("/auth/register", data);
+            const res = await axiosInstance.post("/user/register", data);
             
-            set({authUser: res.data.user});
+            set({authUser: res.data.data.user});
             toast.success(res.data.message);
         }
         catch (error) {
@@ -44,8 +45,9 @@ export const userAuthStore = create((set) => ({
     login: async (data) => {
         set({isLoggingIn: true});
         try {
-            const res = await axiosInstance.post("/auth/login", data);
-            set({authUser: res.data.user});
+            const res = await axiosInstance.post("/user/login", data);
+            set({authUser: res.data.data.user});
+
             toast.success(res.data.message);
         }
         catch (error) {
@@ -59,7 +61,7 @@ export const userAuthStore = create((set) => ({
 
     logout: async () => {
         try {
-            await axiosInstance.get("/auth/logout");  
+            await axiosInstance.get("/user/logout");  
             set({authUser: null});
             toast.success("Logged out successfully");  
         }
