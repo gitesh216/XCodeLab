@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { z } from "zod";
 
+import { userAuthStore } from "../store/userAuthStore";
+import AuthImagePattern from "../components/AuthImagePattern";
+
 const signUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
   password: z.string().min(6, "Password must be atleast of 6 characters"),
@@ -15,7 +18,7 @@ const signUpSchema = z.object({
 function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { signup, isSigninUp } = useAuthStore();
+  const { signup, isSigninUp } = userAuthStore();
 
   const {
     register,
