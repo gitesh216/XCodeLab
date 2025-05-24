@@ -35,11 +35,11 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data) => {
- 
     try {
-      await login(data); // your auth logic here
+      await login(data); // auth logic here
       console.log("Login Data:", data);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Login failed:", error);
     } 
   };
