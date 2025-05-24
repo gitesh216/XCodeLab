@@ -29,7 +29,13 @@ function SignUpPage() {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    try {
+      await signup(data);
+      console.log("Signup data: ", data);
+    }
+    catch (error) {
+      console.log("Error in signup", error);
+    }
   };
 
   return (
