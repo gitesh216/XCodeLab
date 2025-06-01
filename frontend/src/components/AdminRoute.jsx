@@ -9,9 +9,12 @@ function AdminRoute() {
             <Loader className='size-10 animate-spin' />
         </div>
     }
-    if(!authUser || authUser.role !== "admin"){
+    setTimeout(() => {
+      if(!authUser || authUser.role !== "ADMIN"){
         return <Navigate to="/" />
-    }
+      }
+    }, 100);
+    
 
   return (
     <Outlet />

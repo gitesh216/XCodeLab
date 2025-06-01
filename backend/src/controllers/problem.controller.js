@@ -27,7 +27,8 @@ const createProblem = asyncHandler(async (req, res) => {
     if (req.user.role !== "ADMIN") {
         throw new ApiError(403, "You are not allowed to create a problem");
     }
-
+    
+    
     // 3. loop through each reference solution in the database with the corresponding solution
     for (const [language, solutionCode] of Object.entries(referenceSolution)) {
         // 3.1 get judge0 submission id for the current language
@@ -38,19 +39,22 @@ const createProblem = asyncHandler(async (req, res) => {
         }
 
         // 3.2 prepare judge0 submission for all the testcases
+        console.log("Testcases", testcases);
         const submissions = testcases.map(({ input, output }) => ({
             source_code: solutionCode,
             language_id: languageId,
             stdin: input,
             expected_output: output,
         }));
-
+        console.log(submissions);
+        
         // 3.3 submit all the test cases in one batch
         const submissionResults = await submitBatch(submissions);
 
         // 3.4  extract tokens from reponse
-        const tokens = submissionResults.map((res) => res.token);
-
+        console.log("Before map Submission results", submissionResults);
+        const tokens = submissionResults.map((res) => res?.token);
+        console.log("After map Submission Tokens", tokens);
         // 3.5 poll judge0 untill all submissions are done
         const results = await pollBatchResults(tokens);
 

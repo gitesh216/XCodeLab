@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import AddProblem from "./pages/AddProblem";
 import { userAuthStore } from "./store/userAuthStore";
 import { Layout, Loader } from "lucide-react";
 import AdminRoute from "./components/AdminRoute";
@@ -45,11 +46,13 @@ function App() {
             path="/signup"
             element={!authUser ? <SignUpPage /> : <Navigate to="/" />}
           />
-          <Route element={AdminRoute}/>
-          <Route 
-            path="/add-problem"
-            element={authUser ? <AddProblem /> : <Navigate to="/" />} 
-          />
+          
+          <Route element={<AdminRoute />}>
+            <Route 
+              path="/add-problem"
+              element={<AddProblem />} 
+            />
+          </Route>
 
         </Routes>
       </div>
