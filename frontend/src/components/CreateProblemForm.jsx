@@ -64,7 +64,6 @@ const problemSchema = z.object({
 });
 
 // Sample problem data for pre-filling the form
-// Sample problem data for pre-filling the form
 const sampledpData = {
   title: "Climbing Stairs",
   category: "dp", // Dynamic Programming
@@ -576,7 +575,7 @@ const CreateProblemForm = () => {
       const res = await axiosInstance.post("/problems/create-problem", value);
       console.log("Problem created 1", res);
       console.log("Problem created", res.data);
-      toast.success(res.data.message);
+      toast.success(res.data.message || "Problem created successfully");
       navigation("/");
     } 
     catch (error) {
