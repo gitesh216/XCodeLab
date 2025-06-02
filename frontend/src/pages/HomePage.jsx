@@ -1,7 +1,8 @@
 import React from "react";
 
-function HomePage() {
+function HomePage() {  
   return (
+    <>
     <div className="min-h-screen flex flex-col items-center mt-14 px-4">
       <div className="absolute top-16 left-0 w-1/3 h-1/3-bg-primary opacity-30 blur-3xl rounded-md bottom-9"></div>
       <h1 className="text-4xl font-extrabold z-10 text-center">
@@ -11,6 +12,7 @@ function HomePage() {
         A platform for learning and practicing coding problems
       </p>
     </div>
+    </>
   );
 }
 
