@@ -7,12 +7,13 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import AddProblem from "./pages/AddProblem";
 import { userAuthStore } from "./store/userAuthStore";
-import { Layout, Loader } from "lucide-react";
+import { Loader } from "lucide-react";
 import AdminRoute from "./components/AdminRoute";
+import Layout from "./layout/Layout";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = userAuthStore();
-
+  
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -31,6 +32,7 @@ function App() {
         <Toaster />
         <Routes>
           <Route path="/" element={<Layout />}>
+          
             <Route
               index
               element={authUser ? <HomePage /> : <Navigate to="/login" />}
