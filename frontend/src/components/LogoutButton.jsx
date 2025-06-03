@@ -1,5 +1,5 @@
 import React from "react";
-import { userAuthStore } from "../store/userAuthStore";
+import { userAuthStore } from "../store/useAuthStore";
 
 const LogoutButton = ({ children }) => {
   const { logout } = userAuthStore();

@@ -1,6 +1,6 @@
 import React from "react";
 import { User, Code, LogOut, Settings } from "lucide-react";
-import { userAuthStore } from "../store/userAuthStore";
+import { userAuthStore } from "../store/useAuthStore";
 import { Link } from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 
@@ -236,7 +236,7 @@ const Navbar = () => {
                     to="/admin/dashboard"
                     className="flex items-center gap-3 p-3 hover:bg-warning/10 hover:text-warning transition-all rounded-lg"
                   >
-                    <Shield className="w-4 h-4" />
+                    {/* <Shield className="w-4 h-4" /> */}
                     <span className="font-medium">Admin Dashboard</span>
                   </Link>
                 </li>

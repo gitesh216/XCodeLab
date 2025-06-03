@@ -12,7 +12,7 @@ import {
   Lock,
   Mail,
 } from "lucide-react";
-import { userAuthStore } from "../store/userAuthStore";
+import { userAuthStore } from "../store/useAuthStore";
 
 // ✅ Zod schema
 const loginSchema = z.object({

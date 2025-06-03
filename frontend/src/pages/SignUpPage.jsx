@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Code, Eye, EyeOff, Loader2, Lock, Mail } from "lucide-react";
 import { z } from "zod";
 
-import { userAuthStore } from "../store/userAuthStore";
+import { userAuthStore } from "../store/useAuthStore";
 import AuthImagePattern from "../components/AuthImagePattern";
 
 const signUpSchema = z.object({
