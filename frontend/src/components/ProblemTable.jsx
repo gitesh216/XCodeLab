@@ -1,16 +1,23 @@
 import React, { useState, useMemo } from "react";
-import { userAuthStore } from "../store/userAuthStore";
+import { userAuthStore } from "../store/useAuthStore";
 import { Link } from "react-router-dom";
 import { Bookmark, PencilIcon, Trash, TrashIcon, Plus } from "lucide-react";
-import { create } from "zustand";
+import CreatePlaylistModal from "./CreatePlaylistModal";
+import AddToPlaylistModal from "./AddToPlaylist";
+import { usePlaylistStore } from "../store/usePlaylistStore";
+import { useActions } from "../store/useActions";
 
 function ProblemTable({ problems }) {
   const { authUser } = userAuthStore();
-
+  const { onDeleteProblem } = useActions();
+  const { createPlaylist } = usePlaylistStore();
   const [search, setSearch] = useState("");
   const [difficulty, setDifficulty] = useState("ALL");
   const [selectedTag, setSelectedTag] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isAddToPlaylistModalOpen, setIsAddToPlaylistModalOpen] = useState(false);
+  const [selectedProblemId, setSelectedProblemId] = useState(null);
 
   // Extract all unique tags from problems
   const allTags = useMemo(() => {
