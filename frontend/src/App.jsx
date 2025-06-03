@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import AddProblem from "./pages/AddProblem";
-import { userAuthStore } from "./store/userAuthStore";
+import { userAuthStore } from "./store/useAuthStore";
 import { Loader } from "lucide-react";
 import AdminRoute from "./components/AdminRoute";
 import Layout from "./layout/Layout";
