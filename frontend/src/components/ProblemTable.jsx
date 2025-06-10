@@ -61,7 +61,7 @@ function ProblemTable({ problems }) {
   }, [filteredProblems, currentPage]);
 
   const handleDelete = (id) => {
-    onDeleteProblems(id);
+    onDeleteProblem(id);
   };
 
   const handleCreatePlaylist = async (data) => {
@@ -69,7 +69,7 @@ function ProblemTable({ problems }) {
   };
 
   const handleAddToPlaylist = (problemId) => {
-    setSelectedPorblemId(problemId);
+    setSelectedProblemId(problemId);
     setIsAddToPlaylistModalOpen(true);
   };
 
