@@ -25,7 +25,7 @@ const getAllListDetails = asyncHandler(async(req, res) => {
 });
 
 const getPlayListDetails = asyncHandler(async(req, res) => {
-    const playlistId = req.params;
+    const { playlistId } = req.params;
 
     const playlist = await db.playlist.findUnique({
         where: {
