@@ -74,10 +74,12 @@ const addProblemToPlaylist = asyncHandler(async(req, res) => {
     if(!Array.isArray(problemIds) || problemIds.length === 0){
         throw new ApiError(400, "Invalid or missing problemIds")
     }
+    console.log("Playlist id", playlistId);
+    console.log("Problem ids", problemIds);
     
-    const problemsInPlaylist = await db.problemsInPlaylist.createMany({
+    const problemsInPlaylist = await db.problemInPlaylist.createMany({
         data: problemIds.map((problemId) => ({
-            playlistId, 
+            playListId:playlistId, 
             problemId
         }))
     })
