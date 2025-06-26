@@ -5,9 +5,8 @@ import { ApiResponse } from "../utils/api-response.js";
 import {
     getJudge0LanguageId,
     getLanguageName,
-    submitBatch,
-    pollBatchResults,
 } from "../libs/judge0.lib.js";
+import { submitBatch, pollBatchResults } from "../libs/rapidApiJudge0.lib.js" 
 import { SubmissionStatus } from "../generated/prisma/index.js";
 
 const executeCode = asyncHandler(async (req, res) => {
@@ -41,7 +40,8 @@ const executeCode = asyncHandler(async (req, res) => {
     const submitResponse = await submitBatch(submissions);
 
     const tokens = submitResponse.map((res) => res.token);
-
+    console.log(tokens);
+    
     // Poll Judge0 for results of all submitted test cases
     const results = await pollBatchResults(tokens);
 
@@ -98,7 +98,7 @@ const executeCode = asyncHandler(async (req, res) => {
                       detailedTestCasesResults.map((r) => r.compile_output),
                   )
                 : null,
-            status: allPassed
+            status: allTestCasesPassed
                 ? SubmissionStatus.ACCEPTED
                 : SubmissionStatus.WRONG_ANSWER,
             memory: detailedTestCasesResults.some((r) => r.memory)
