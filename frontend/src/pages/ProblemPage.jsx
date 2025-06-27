@@ -34,7 +34,7 @@ function ProblemPage() {
 
   const [code, setCode] = useState("");
   const [activeTab, setActiveTab] = useState("description");
-  const [selectedLanguage, setSelectedLanguage] = useState("javascript");
+  const [selectedLanguage, setSelectedLanguage] = useState("java");
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [testcases, setTestcases] = useState([]);
 
@@ -53,10 +53,13 @@ function ProblemPage() {
     getSubmissionCountForProblem(problemId);
   }, [problemId]);
 
+
   useEffect(() => {
     if (problem) {
       // capital and small letter issue
-      setCode(problem.codeSnippet?.[selectedLanguage] || "");
+      console.log("Code snippet: ", problem);
+      
+      setCode(problem.codeSnippet?.[selectedLanguage.toUpperCase()] || "");
 
       setTestcases(
         problem.testcases?.map((tc) => ({
@@ -66,6 +69,12 @@ function ProblemPage() {
       );
     }
   }, [problem, selectedLanguage]);
+
+  useEffect(() => {
+    if (activeTab === "submissions" && problemId) {
+      getSubmissionForProblem(problemId);
+    }
+  }, [activeTab, problemId]);
 
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
