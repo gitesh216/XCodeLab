@@ -135,7 +135,7 @@ const executeCode = asyncHandler(async (req, res) => {
         expected: result.expected,
         stderr: result.stderr,
         compileOutput: result.compile_output,
-        status: result.status,
+        status: result.status.toUpperCase(),
         memory: result.memory,
         time: result.time,
     }));
