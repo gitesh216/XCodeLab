@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   CheckCircle2,
   XCircle,
@@ -55,10 +55,12 @@ const SubmissionsList = ({ submissions, isLoading }) => {
       </div>
     );
   }
-
+  const sortedSubmissions = [...submissions].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
   return (
     <div className="space-y-4">
-      {submissions.map((submission) => {
+      {sortedSubmissions.map((submission) => {
         const avgMemory = calculateAverageMemory(submission.memory);
         const avgTime = calculateAverageTime(submission.time);
 
@@ -71,7 +73,7 @@ const SubmissionsList = ({ submissions, isLoading }) => {
               <div className="flex items-center justify-between">
                 {/* Left Section: Status and Language */}
                 <div className="flex items-center gap-4">
-                  {submission.status === "Accepted" ? (
+                  {submission.status === "ACCEPTED" ? (
                     <div className="flex items-center gap-2 text-success">
                       <CheckCircle2 className="w-6 h-6" />
                       <span className="font-semibold">Accepted</span>
