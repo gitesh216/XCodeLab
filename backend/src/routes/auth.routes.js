@@ -13,7 +13,7 @@ authRouter.post("/register", registerUser)
 
 authRouter.post("/login", loginUser)
 
-authRouter.post("/logout", isUserValidAuthMiddleware, logoutUser)
+authRouter.get("/logout", isUserValidAuthMiddleware, logoutUser)
 
 authRouter.get("/check", isUserValidAuthMiddleware, getUser)
 
