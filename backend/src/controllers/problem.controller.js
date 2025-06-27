@@ -4,10 +4,11 @@ import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
 import {
     getJudge0LanguageId,
-    submitBatch,
-    pollBatchResults,
 } from "../libs/judge0.lib.js";
-import axios from "axios"
+import { 
+    submitBatch,
+    pollBatchResults, 
+} from "../libs/rapidApiJudge0.lib.js"
 
 const createProblem = asyncHandler(async (req, res) => {
     // 1. get all the data from request body
