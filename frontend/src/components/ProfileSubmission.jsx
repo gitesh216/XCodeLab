@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const ProfileSubmission = () => {
-  const { submissions, getAllSubmissions } = useSubmissionStore();
+  const { submissions, getAllSubmissions, isLoading: isLoadingSubmissions } = useSubmissionStore();
   const [expandedSubmission, setExpandedSubmission] = useState(null);
   const [filter, setFilter] = useState("all");
 
@@ -52,11 +52,18 @@ const ProfileSubmission = () => {
       setExpandedSubmission(id);
     }
   };
+  console.log("submissions:", submissions);
+  console.log("type of submissions:", typeof submissions);
 
-  const filteredSubmissions = submissions.filter((submission) => {
-    if (filter === "all") return true;
-    return submission.status === filter;
-  });
+  if (isLoadingSubmissions) {
+    return <div>Loading...</div>;
+  }
+
+  let filteredSubmissions = submissions;
+  // filteredSubmissions = submissions.submissions.filter((submission) => {
+  //   if (filter === "all") return true;
+  //   return submission.status === filter;
+  // });
 
   return (
     <div className="n bg-base-200 p-4 md:p-8">
