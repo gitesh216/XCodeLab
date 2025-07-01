@@ -10,10 +10,13 @@ import {
   Tag,
   ExternalLink,
 } from "lucide-react";
+import CreatePlaylistModal from "./CreatePlaylistModal";
 
 const PlaylistProfile = () => {
   const { getAllPlaylists, playlists, deletePlaylist } = usePlaylistStore();
   const [expandedPlaylist, setExpandedPlaylist] = useState(null);
+  const { createPlaylist } = usePlaylistStore();
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   useEffect(() => {
     getAllPlaylists();
@@ -53,12 +56,21 @@ const PlaylistProfile = () => {
     }).format(date);
   };
 
+  const handleCreatePlaylist = async (data) => {
+    await createPlaylist(data);
+  };
+
   return (
     <div className="p-4 bg-base-200 min-h-screen">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-primary">My Playlists</h2>
-          <button className="btn btn-primary btn-sm">Create Playlist</button>
+          <button 
+            className="btn btn-primary btn-sm"
+            onClick={() => setIsCreateModalOpen(true)}
+          >
+            Create Playlist
+          </button>
         </div>
 
         {playlists.length === 0 ? (
@@ -69,7 +81,12 @@ const PlaylistProfile = () => {
                 Create your first playlist to organize problems!
               </p>
               <div className="card-actions justify-center mt-4">
-                <button className="btn btn-primary">Create Playlist</button>
+                <button 
+                  className="btn btn-primary"
+                  onClick={() => setIsCreateModalOpen(true)}
+                >
+                  Create Playlist
+                </button>
               </div>
             </div>
           </div>
@@ -198,7 +215,13 @@ const PlaylistProfile = () => {
           </div>
         )}
       </div>
+      <CreatePlaylistModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onSubmit={handleCreatePlaylist}
+      />
     </div>
+
   );
 };
 
