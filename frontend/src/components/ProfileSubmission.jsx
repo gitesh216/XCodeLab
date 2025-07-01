@@ -59,11 +59,11 @@ const ProfileSubmission = () => {
     return <div>Loading...</div>;
   }
 
-  let filteredSubmissions = submissions;
-  // filteredSubmissions = submissions.submissions.filter((submission) => {
-  //   if (filter === "all") return true;
-  //   return submission.status === filter;
-  // });
+  
+  let filteredSubmissions = submissions.filter((submission) => {
+    if (filter === "all") return true;
+    return submission.status === filter;
+  });
 
   return (
     <div className="n bg-base-200 p-4 md:p-8">
@@ -89,17 +89,17 @@ const ProfileSubmission = () => {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => setFilter("Accepted")}>
+                  <button onClick={() => setFilter("ACCEPTED")}>
                     Accepted
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => setFilter("Wrong Answer")}>
+                  <button onClick={() => setFilter("WRONG_ANSWER")}>
                     Wrong Answer
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => setFilter("Time Limit Exceeded")}>
+                  <button onClick={() => setFilter("TIME_LIMIT_EXCEEDED")}>
                     Time Limit Exceeded
                   </button>
                 </li>
@@ -114,7 +114,7 @@ const ProfileSubmission = () => {
               <div className="stat p-2">
                 <div className="stat-title">Accepted</div>
                 <div className="stat-value text-lg text-success">
-                  {submissions.filter((s) => s.status === "Accepted").length}
+                  {submissions.filter((s) => s.status === "ACCEPTED").length}
                 </div>
               </div>
             </div>
