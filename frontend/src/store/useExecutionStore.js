@@ -9,18 +9,35 @@ export const useExecutionStore = create((set) => ({
     executeCode: async(source_code, language_id, stdin, expected_outputs, problemId) => {
         try {
             set({isExecuting: true});
-            console.log("Submission data", { source_code, language_id, stdin, expected_outputs, problemId });
-            const res = await axiosInstance.put("/execute-code", { source_code, language_id, stdin, expected_outputs, problemId })
-            console.log("submission: ", res.data);
+
+            const res = await axiosInstance.put("/execute-code/submit-code", { source_code, language_id, stdin, expected_outputs, problemId })
+    
             set({ submission: res.data.data });
-            console.log("submission: ", res.data.data);
-            
-            console.log("ExecutionStore Submission data", res.data.data);
+    
             toast.success(res.data.message);
         } 
         catch (error) {
-            console.log("Error in executing code", error);
-            toast.error("Error executing code");
+            console.log("Error in executing submit code", error);
+            toast.error("Error executing submit code");
+        }
+        finally {
+            set({isExecuting: false});
+        }
+    },
+
+    executeRunCode: async(source_code, language_id, stdin, expected_outputs, problemId) => {
+        try {
+            set({isExecuting: true});
+            
+            const res = await axiosInstance.post("/execute-code/run-code", { source_code, language_id, stdin, expected_outputs, problemId })
+    
+            set({ submission: res.data.data });
+            
+            toast.success(res.data.message);
+        } 
+        catch (error) {
+            console.log("Error in executing run code", error);
+            toast.error("Error executing run code");
         }
         finally {
             set({isExecuting: false});

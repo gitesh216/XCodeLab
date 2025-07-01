@@ -46,7 +46,7 @@ function ProblemPage() {
     submissionCount,
   } = useSubmissionStore();
 
-  const { executeCode, submission, isExecuting } = useExecutionStore();
+  const { executeCode, submission, isExecuting, executeRunCode } = useExecutionStore();
 
   useEffect(() => {
     getProblemById(problemId);
@@ -56,13 +56,9 @@ function ProblemPage() {
 
   useEffect(() => {
     if (problem) {
-      // capital and small letter issue
-      console.log("Code snippet: ", problem);
-      
       setCode(problem.codeSnippet?.[selectedLanguage.toUpperCase()] || "");
-
       setTestcases(
-        problem.testcases?.map((tc) => ({
+        problem.testcases?.slice(0, 3).map((tc) => ({
           input: tc.input,
           output: tc.output,
         })) || []
@@ -86,12 +82,25 @@ function ProblemPage() {
     e.preventDefault();
     try {
       const language_id = getLanguageId(selectedLanguage);
+      const stdin = problem.testcases.slice(0, 3).map((tc) => tc.input);
+      const expected_outputs = problem.testcases.slice(0, 3).map((tc) => tc.output);
+      executeRunCode(code, language_id, stdin, expected_outputs, problemId);
+    } 
+    catch (error) {
+      console.log("Error executing run code", error);
+    }
+  };
+
+  const handleSubmitCode = (e) => {
+    e.preventDefault();
+    try {
+      const language_id = getLanguageId(selectedLanguage);
       const stdin = problem.testcases.map((tc) => tc.input);
       const expected_outputs = problem.testcases.map((tc) => tc.output);
       executeCode(code, language_id, stdin, expected_outputs, problemId);
     } 
     catch (error) {
-      console.log("Error executing code", error);
+      console.log("Error executing submit code", error);
     }
   };
 
@@ -335,8 +344,12 @@ const renderTabContent = () => {
               >
                 {!isExecuting && <Play className="w-4 h-4" />} Run Code
               </button>
-              <button className="btn btn-success gap-2">
-                Submit Solution
+              <button 
+                className={`btn btn-success gap-2 ${isExecuting ? "loading" : ""}`}
+                onClick={handleSubmitCode}
+                disabled={isExecuting}
+              >
+              {!isExecuting && <Play className="w-4 h-4" />}  Submit Solution
               </button>
             </div>
           </div>
