@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start">
+      <div className="flex flex-col w-full min-h-screen">
         <Toaster />
         <Routes>
           <Route path="/" element={<Layout />}>

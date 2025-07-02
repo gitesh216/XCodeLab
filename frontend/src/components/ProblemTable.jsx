@@ -153,21 +153,21 @@ function ProblemTable({ problems }) {
         <table className="table table-zebra table-lg bg-base-200 text-base-content">
           <thead className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
             <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                  Problem
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                  Tags
-                </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                  Difficulty
-                </th>
-                <th className="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                  Actions
-                </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                Status
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                Problem
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                Tags
+              </th>
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                Difficulty
+              </th>
+              <th className="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -177,16 +177,18 @@ function ProblemTable({ problems }) {
                   (user) => user.userId === authUser?.id
                 );
                 return (
-                  <tr key={problem.id}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150">
+                  <tr
+                    key={problem.id}
+                    className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150"
+                  >
                     <td className="px-6 py-4">
                       {isSolved ? (
-                          <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                        ) : (
-                          <Circle className="w-5 h-5 text-gray-300 dark:text-gray-600" />
-                        )}
+                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                      ) : (
+                        <Circle className="w-5 h-5 text-gray-300 dark:text-gray-600" />
+                      )}
                     </td>
-                    <td className="px-6 py-4"> 
+                    <td className="px-6 py-4">
                       <Link
                         to={`/problem/${problem.id}`}
                         className="font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 hover:underline cursor-pointer block"
@@ -196,67 +198,68 @@ function ProblemTable({ problems }) {
                     </td>
 
                     <td className="px-6 py-4">
-                        <div className="flex flex-wrap gap-1.5">
-                          {(problem.tags || []).map((tag, idx) => (
-                            <span
-                              key={idx}
-                              className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-
-                    <td className="px-6 py-4">
-                        <span
-                          className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium ${getDifficultyColor(
-                            problem.difficulty
-                          )}`}
-                        >
-                          {problem.difficulty}
-                        </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {(problem.tags || []).map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </td>
 
-                     <td className="px-6 py-4">
-                        <div className="flex items-center justify-end gap-2">
-                          {authUser?.role === "ADMIN" && (
-                            <>
-                              <button
-                                onClick={() => handleDelete(problem.id)}
-                                className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-150"
-                                title="Delete problem"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                              <button
-                                disabled
-                                className="p-2 text-gray-300 dark:text-gray-600 rounded-lg cursor-not-allowed"
-                                title="Edit problem (coming soon)"
-                              >
-                                <Edit3 className="w-4 h-4" />
-                              </button>
-                            </>
-                          )}
-                          <button
-                            onClick={() => handleAddToPlaylist(problem.id)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-150"
-                            title="Save to playlist"
-                          >
-                            <Bookmark className="w-4 h-4" />
-                            <span className="hidden sm:inline">
-                              Save to Playlist
-                            </span>
-                          </button>
-                        </div>
-                      </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium ${getDifficultyColor(
+                          problem.difficulty
+                        )}`}
+                      >
+                        {problem.difficulty}
+                      </span>
+                    </td>
+
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        {authUser?.role === "ADMIN" && (
+                          <>
+                            <button
+                              onClick={() => handleDelete(problem.id)}
+                              className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-150"
+                              title="Delete problem"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                            <button
+                              disabled
+                              className="p-2 text-gray-300 dark:text-gray-600 rounded-lg cursor-not-allowed"
+                              title="Edit problem (coming soon)"
+                            >
+                              <Edit3 className="w-4 h-4" />
+                            </button>
+                          </>
+                        )}
+                        <button
+                          onClick={() => handleAddToPlaylist(problem.id)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-150"
+                          title="Save to playlist"
+                        >
+                          <Bookmark className="w-4 h-4" />
+                          <span className="hidden sm:inline">
+                            Save to Playlist
+                          </span>
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
                 <td colSpan={5} className="text-center py-6 text-gray-500">
-                  No problems found. Try adjusting your search or filter criteria
+                  No problems found. Try adjusting your search or filter
+                  criteria
                 </td>
               </tr>
             )}
