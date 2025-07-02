@@ -59,59 +59,117 @@ const SubmissionsList = ({ submissions, isLoading }) => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
   return (
-    <div className="space-y-4">
-      {sortedSubmissions.map((submission) => {
-        const avgMemory = calculateAverageMemory(submission.memory);
-        const avgTime = calculateAverageTime(submission.time);
+    // <div className="space-y-4">
+    //   {sortedSubmissions.map((submission) => {
+    //     const avgMemory = calculateAverageMemory(submission.memory);
+    //     const avgTime = calculateAverageTime(submission.time);
 
-        return (
-          <div
-            key={submission.id}
-            className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow rounded-lg"
-          >
-            <div className="card-body p-4">
-              <div className="flex items-center justify-between">
-                {/* Left Section: Status and Language */}
-                <div className="flex items-center gap-4">
-                  {submission.status === "ACCEPTED" ? (
-                    <div className="flex items-center gap-2 text-success">
-                      <CheckCircle2 className="w-6 h-6" />
-                      <span className="font-semibold">Accepted</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2 text-error">
-                      <XCircle className="w-6 h-6" />
-                      <span className="font-semibold">{submission.status}</span>
-                    </div>
-                  )}
-                  <div className="badge badge-neutral">
-                    {submission.language}
-                  </div>
-                </div>
+    //     return (
+    //       <div
+    //         key={submission.id}
+    //         className="card bg-base-200 shadow-lg hover:shadow-xl transition-shadow rounded-lg"
+    //       >
+    //         <div className="card-body p-4">
+    //           <div className="flex items-center justify-between">
+    //             {/* Left Section: Status and Language */}
+    //             <div className="flex items-center gap-4">
+    //               {submission.status === "ACCEPTED" ? (
+    //                 <div className="flex items-center gap-2 text-success">
+    //                   <CheckCircle2 className="w-6 h-6" />
+    //                   <span className="font-semibold">Accepted</span>
+    //                 </div>
+    //               ) : (
+    //                 <div className="flex items-center gap-2 text-error">
+    //                   <XCircle className="w-6 h-6" />
+    //                   <span className="font-semibold">{submission.status}</span>
+    //                 </div>
+    //               )}
+    //               <div className="badge badge-neutral">
+    //                 {submission.language}
+    //               </div>
+    //             </div>
 
-                {/* Right Section: Runtime, Memory, and Date */}
-                <div className="flex items-center gap-4 text-base-content/70">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{avgTime.toFixed(3)} s</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Memory className="w-4 h-4" />
-                    <span>{avgMemory.toFixed(0)} KB</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>
-                      {new Date(submission.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
+    //             {/* Right Section: Runtime, Memory, and Date */}
+    //             <div className="flex items-center gap-4 text-base-content/70">
+    //               <div className="flex items-center gap-1">
+    //                 <Clock className="w-4 h-4" />
+    //                 <span>{avgTime.toFixed(3)} s</span>
+    //               </div>
+    //               <div className="flex items-center gap-1">
+    //                 <Memory className="w-4 h-4" />
+    //                 <span>{avgMemory.toFixed(0)} KB</span>
+    //               </div>
+    //               <div className="flex items-center gap-1">
+    //                 <Calendar className="w-4 h-4" />
+    //                 <span>
+    //                   {new Date(submission.createdAt).toLocaleDateString()}
+    //                 </span>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     );
+    //   })}
+    // </div>
+    <div className="space-y-5">
+  {sortedSubmissions.map((submission) => {
+    const avgMemory = calculateAverageMemory(submission.memory);
+    const avgTime = calculateAverageTime(submission.time);
+
+    return (
+      <div
+        key={submission.id}
+        className="bg-base-100 border border-base-300 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+      >
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center p-4 gap-4">
+          {/* Left Section */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-center gap-2">
+              {submission.status === "ACCEPTED" ? (
+                <span className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400">
+                  <CheckCircle2 className="w-4 h-4" />
+                  Accepted
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium rounded-full bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400">
+                  <XCircle className="w-4 h-4" />
+                  {submission.status}
+                </span>
+              )}
+            </div>
+            <div className="px-2 py-1 text-xs font-medium bg-base-200 text-base-content rounded-md border border-base-300">
+              {submission.language}
             </div>
           </div>
-        );
-      })}
-    </div>
+
+          {/* Right Section */}
+          <div className="flex flex-wrap md:flex-nowrap items-center gap-4 text-sm text-base-content/70">
+            <div className="flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              <span>{avgTime.toFixed(3)} s</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Memory className="w-4 h-4" />
+              <span>{avgMemory.toFixed(0)} KB</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              <span>
+                {new Date(submission.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
   );
 };
 

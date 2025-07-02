@@ -12,6 +12,7 @@ import AdminRoute from "./components/AdminRoute";
 import Layout from "./layout/Layout";
 import ProblemPage from "./pages/ProblemPage";
 import Profile from "./pages/Profile";
+import LeetCodeInterface from "./pages/SampleLeetcode";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = userAuthStore();
@@ -59,6 +60,11 @@ function App() {
           <Route
             path="/profile"
             element={authUser ? <Profile /> : <Navigate to="/login" />}
+          />
+
+          <Route
+            path="/sample/:problemId"
+            element= {<LeetCodeInterface />}
           />
           
           <Route element={<AdminRoute />}>

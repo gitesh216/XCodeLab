@@ -122,20 +122,7 @@ function ProblemTable({ problems }) {
         />
 
         <select
-          className="px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-sm border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-        >
-          <option value="ALL">All Difficulties</option>
-          {difficulties.map((diff) => (
-            <option key={diff} value={diff}>
-              {diff.charAt(0).toUpperCase() + diff.slice(1).toLowerCase()}
-            </option>
-          ))}
-        </select>
-
-        <select
-          className="px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-sm border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-sm border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition text-gray-900 dark:text-white"
           value={selectedTag}
           onChange={(e) => setSelectedTag(e.target.value)}
         >
@@ -143,6 +130,19 @@ function ProblemTable({ problems }) {
           {allTags.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
+            </option>
+          ))}
+        </select>
+
+        <select
+          className="px-3 py-2 rounded-md bg-white dark:bg-gray-800 text-sm border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition text-gray-900 dark:text-white"
+          value={difficulty}
+          onChange={(e) => setDifficulty(e.target.value)}
+        >
+          <option value="ALL">All Difficulties</option>
+          {difficulties.map((diff) => (
+            <option key={diff} value={diff}>
+              {diff.charAt(0).toUpperCase() + diff.slice(1).toLowerCase()}
             </option>
           ))}
         </select>
@@ -302,6 +302,7 @@ function ProblemTable({ problems }) {
       />
     </div>
   );
+  
 }
 
 export default ProblemTable;
