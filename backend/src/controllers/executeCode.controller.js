@@ -42,9 +42,6 @@ const executeCode = asyncHandler(async (req, res) => {
     // Poll Judge0 for results of all submitted test cases
     const results = await pollBatchResults(tokens);
 
-    console.log("Results-----------------------------");
-    console.log(results);
-
     // Analyse test case results
     let allTestCasesPassed = true;
     const detailedTestCasesResults = results.map((result, i) => {
@@ -197,12 +194,18 @@ const executeRunCodeTestcases = asyncHandler(async (req, res) => {
     const results = await pollBatchResults(tokens);
 
     // Analyse test case results
-    let allTestCasesPassed = true
+    let allTestCasesPassed = true;
+    let status;
     const detailedTestCasesResults = results.map((result, i) => {
         const stdout = result.stdout?.trim();
         const expected_output = expected_outputs[i]?.trim();
         const passed = stdout === expected_output;
-
+        if(stdout === expected_output){
+            status = "Accepted"
+        }
+        else{
+            status = "Wrong Answer"
+        }
         // console.log(`Testcase #${i + 1}`);
         // console.log(`Input: ${stdin[i]}`);
         // console.log(`Expected Output for testcase:  ${expected_output}`);
@@ -214,10 +217,11 @@ const executeRunCodeTestcases = asyncHandler(async (req, res) => {
             testCase: i + 1,
             passed,
             stdout,
+            input: stdin[i],
             expected: expected_output,
             stderr: result.stderr || null,
             compile_output: result.compile_output || null,
-            status: result.status.description,
+            status: status,
             memory: result.memory ? `${result.memory} KB` : undefined,
             time: result.time ? `${result.time} s` : undefined,
         };
