@@ -231,7 +231,7 @@ const NavBar = () => {
       className={`absolute top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg border-b border-gray-200/20 dark:border-gray-700/20"
-          : "bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200/10 dark:border-gray-700/10"
+          : "bg-white/95 dark:bg-gray-900/40 backdrop-blur-sm border-b border-gray-200/10 dark:border-gray-700/10"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -291,8 +291,11 @@ const NavBar = () => {
             <div className="relative group">
               <button className="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
                 <img
-                  src={authUser?.image}
-                  alt={authUser?.name}
+                  src={
+                   authUser?.image ||
+                   "https://avatar.iran.liara.run/public/boy"
+                  }
+                  alt={`${authUser?.name || 'User'}'s Avatar`}
                   className="w-8 h-8 rounded-full ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-blue-500 transition-all duration-200"
                 />
                 <span className="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-300">
