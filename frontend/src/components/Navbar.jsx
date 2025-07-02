@@ -221,7 +221,7 @@ const NavBar = () => {
   };
 
   const navLinks = [
-    { name: "Problems", href: "/problems", icon: Code2 },
+    { name: "Problems", href: "/", icon: Code2 },
     { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
     { name: "Contests", href: "/contests", icon: MessageCircle },
   ];
@@ -310,7 +310,10 @@ const NavBar = () => {
                   <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center space-x-3">
                       <img
-                        src={authUser?.image}
+                        src={
+                        authUser?.image ||
+                        "https://avatar.iran.liara.run/public/boy"
+                      }
                         alt={authUser?.name}
                         className="w-10 h-10 rounded-full"
                       />

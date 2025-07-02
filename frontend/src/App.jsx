@@ -13,6 +13,8 @@ import Layout from "./layout/Layout";
 import ProblemPage from "./pages/ProblemPage";
 import Profile from "./pages/Profile";
 import LeetCodeInterface from "./pages/SampleLeetcode";
+import UnderDevelopmentPage from "./pages/UnderDevelopment";
+import ProblemPage2 from "./pages/ProblemPage2";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = userAuthStore();
@@ -54,7 +56,7 @@ function App() {
 
           <Route
             path="/problem/:problemId"
-            element={authUser ? <ProblemPage /> : <Navigate to="/login" />}
+            element={authUser ? <ProblemPage2 /> : <Navigate to="/login" />}
           />
 
           <Route
@@ -73,6 +75,21 @@ function App() {
               element={<AddProblem />} 
             />
           </Route>
+
+          <Route 
+            path="/leaderboard" 
+            element={authUser ? <UnderDevelopmentPage /> : <Navigate to="/login" />} 
+          />
+
+          <Route 
+            path="/contests" 
+            element={authUser ? <UnderDevelopmentPage /> : <Navigate to="/login" />} 
+          />
+
+          <Route 
+            path="/settings" 
+            element={authUser ? <UnderDevelopmentPage /> : <Navigate to="/login" />} 
+          />
 
         </Routes>
       </div>
